@@ -27,6 +27,7 @@ public class CheckoutView {
         return checkoutController.processCheckout(checkout);
     }
 
+    @CrossOrigin
     @ExceptionHandler(value = {ShopperException.class})
     @ResponseBody
     Object errorHandler(ShopperException ex, HttpServletResponse response) {

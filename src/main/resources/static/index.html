@@ -4,24 +4,140 @@
         <meta charset="utf-8" />
         <title>Shopper's Homepage</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons">
+        <link rel="stylesheet" href="https://unpkg.com/vue-material/dist/vue-material.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/vue-material/dist/theme/default.css">
     </head>
     <body>
-        <header>
-            <nav class="navbar">
-                <a href="#">
-                    Shopper
-                </a>
-            </nav>
-        </header>
-        <article>
-            <h1>Products</h1>
-        </article>
-        <footer>
-            &copy; Copyright 2020.
-        </footer>
+        <div id="app">
+            <header class="container">
+                <nav class="navbar navbar-default">
+                    <a href="#">
+                        Shopper
+                    </a>
+                </nav>
+            </header>
+            <article class="container">
+                <md-steppers :md-active-step.sync="active" md-linear>
+                    <md-step id="first" md-label="Selecionar items" md-description="" :md-done.sync="first" :md-editable="true">
+                        <div style="max-height: 100vh;min-height: 100vh; overflow-y: scroll">
+                        <div class="row">
+                            <div v-for="item in items" class="col-md-3">
+                                <img class="img-rounded" src="//placehold.it/300">
+                                <h4>{{item.name}} {{item.qty}}</h4>
+                                <h5 class="text-success">{{item.price | currency}}</h5>
+                                <div v-if="!item.qty">
+                                    <button class="btn btn-success" @click="addItem(item);">Adicionar</button>
+                                </div>
+                                <div v-if="!!item.qty">
+                                    <button class="btn btn-success" @click="addItem(item);">+</button>
+                                    <button class="btn btn-default">{{item.qty}}</button>
+                                    <button class="btn btn-success" @click="removeItem(item);">-</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div style="padding: 15px;background: #eee">
+                        <div v-if="qty > 0" class="row">
+                            <div class="col-md-7">
+                                <h3>Total: {{total | currency}}</h3>
+                                <h6>Selecionados: {{qty}}</h6>
+                            </div>
+                            <div class="col-md-5 text-right">
+                                <button class="btn btn-success" @click="signUp();">Informar dados
+                                </button>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        </div>
+                    </md-step>
+                    <md-step id="second" md-label="Cadastro" md-description="" :md-done.sync="second" :md-editable="true">
+                        <div  style="max-height: 100vh;min-height: 100vh; overflow-y: scroll">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <legend>Dados básicos</legend>
+                            </div>
+                            <div class="col-md-8 col-md-offset-3">
+                                <label>Nome completo</label>
+                                <input v-model="user.fullName" name="fullName" class="form-control">
+                            </div>
+                            <div class="col-md-8">
+                                <label>Email</label>
+                                <input v-model="user.email" name="email" class="form-control">
+                            </div>
+                            <div class="col-md-8">
+                                <label>Celular</label>
+                                <input v-model="user.phoneNumber" name="phoneNumber" class="form-control">
+                            </div>
+                            <div class="col-md-8">
+                                <label>CPF</label>
+                                <input v-model="user.document" name="document" class="form-control">
+                            </div>
+                            <div class="col-md-12" style="margin-top: 50px;">
+                                <legend>Endereço</legend>
+                            </div>
+                            <div class="col-md-3">
+                                <label>CEP</label>
+                                <input v-model="address.postalCode" name="postalCode" class="form-control">
+                            </div>
+                            <div class="col-md-2">
+                                <label>Estado</label>
+                                <input v-model="address.state" name="state" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <label>Cidade</label>
+                                <input v-model="address.city" name="city" class="form-control">
+                            </div>
+                            <div class="col-md-12"></div>
+                            <div class="col-md-3">
+                                <label>Bairro</label>
+                                <input v-model="address.district" name="district" class="form-control">
+                            </div>
+                            <div class="col-md-5">
+                                <label>Rua</label>
+                                <input v-model="address.address"  name="address" class="form-control">
+                            </div>
+                            <div class="col-md-12"></div>
+                            <div class="col-md-4">
+                                <label>Número</label>
+                                <input v-model="address.number" name="number" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label>Complemento</label>
+                                <input v-model="    address.complement" name="complement" class="form-control">
+                            </div>
+                        </div>
+                            <div class="clearfix"></div>
+                            <div style="padding: 15px;background: #eee">
+                                <div v-if="qty > 0" class="row">
+                                    <div class="col-md-7">
+                                        <h3>Total: {{total | currency}}</h3>
+                                        <h6>Selecionados: {{qty}}</h6>
+                                    </div>
+                                    <div class="col-md-5 text-right">
+                                        <button class="btn btn-success" @click="checkout();">Finalizar pedido</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </md-step>
+                    <md-step id="third" md-label="Pedido realizado">
+                        <h1>Pedido feito!</h1>
+                        <p>Seu pedido foi realizado com sucesso!</p>
+                    </md-step>
+                </md-steppers>
+            </article>
+            <footer class="container">
+                &copy; Copyright 2020.
+            </footer>
+        </div>
         <!-- Js -->
-        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+        <script src="https://unpkg.com/vue"></script>
+        <script src="https://unpkg.com/vue-material"></script>
         <script src="app.js"></script>
     </body>
 </html>
