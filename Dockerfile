@@ -1,3 +1,4 @@
-FROM tomcat:8.0.20-jre8
-
-CMD ./gradlew war
+FROM openjdk:8-jdk-alpine
+ARG JAR_FILE=build/libs/*.jar
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
