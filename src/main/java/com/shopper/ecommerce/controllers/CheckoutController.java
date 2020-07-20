@@ -5,12 +5,16 @@ import com.shopper.ecommerce.exceptions.InvalidItemQuantityException;
 import com.shopper.ecommerce.models.*;
 import com.shopper.ecommerce.repositories.ProductRepository;
 import com.shopper.ecommerce.repositories.SaleRepository;
+import com.shopper.services.EmailService;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Optional;
 
 import static java.math.BigDecimal.ZERO;
@@ -31,6 +35,9 @@ public class CheckoutController {
 
     @Autowired
     SaleRepository sales;
+
+    @Autowired
+    EmailService emailService;
 
     /**
      * This method handles checkout processing, it includes serveral phases:
@@ -63,7 +70,11 @@ public class CheckoutController {
 
         newSale.setItems(checkout.getItems());
 
+        sum(newSale);
+
         sales.save(newSale);
+
+        sendEmail(newSale);
 
         return newSale;
     }
@@ -128,6 +139,95 @@ public class CheckoutController {
 
         }
 
+    }
+
+
+
+
+    /**
+     * Sends confirmation email to customer
+     * @param newSale
+     */
+    private void sendEmail(Sale newSale) {
+
+        emailService.sendEmail(
+                newSale.getCustomer().getEmail(),
+                "Pedido " + newSale.getId() + " recebido",
+                buildEmailBody(newSale));
 
     }
+
+
+    /**
+     * Build the email body in html
+     * @param newSale
+     * @return
+     * TODO: implement a template system for emails
+     */
+    private String buildEmailBody(Sale newSale) {
+
+        String firstName = newSale.getCustomer().getFullName().split(" ")[0];
+
+        NumberFormat nf = DecimalFormat.getCurrencyInstance(new Locale.Builder().setLanguage("pt").setRegion("BR").build());
+
+        StringBuilder html = new StringBuilder();
+        html.append("<!doctype html>");
+        html.append("<html>");
+            html.append("<body style='background:#eee; padding: 15px;'>");
+                html.append("<div style='max-width: 600px; background: #fff;padding: 15px;border-radius: 15px;'>");
+                    html.append("<h2>Olá "+firstName+"</h2>");
+                    html.append("<p>Recebemos seu pedido no nosso site:</p>");
+                    html.append("<table style='width:100%;text-align:left; background: #fff;'>");
+                        html.append("<thead>");
+                            html.append("<tr>");
+                            html.append("<th>Código</th>");
+                            html.append("<th style='width:200px'>Descrição</th>");
+                            html.append("<th>Qtde</th>");
+                            html.append("<th>Preço</th>");
+                            html.append("<th>Sub-total</th>");
+                            html.append("</tr>");
+                        html.append("</thead>");
+                        html.append("<tbody>");
+                        for(ShoppingCartItem item: newSale.getItems()) {
+                            html.append("<tr>");
+                                html.append("<td style='padding: 5px'>"+item.getId()+"</td>");
+                                html.append("<td style='padding: 5px'><b>"+item.getName()+"</b><br>"+item.getDescription()+"</td>");
+                                html.append("<td style='padding: 5px'>"+item.getQty()+"</td>");
+                                html.append("<td style='padding: 5px'>"+nf.format(item.getPrice())+"</td>");
+                                html.append("<td style='padding: 5px'>"+nf.format(item.getPrice().multiply(BigDecimal.valueOf(item.getQty())))+"</td>");
+                            html.append("</tr>");
+                        }
+                        html.append("</tbody>");
+                        html.append("<tfoot>");
+                        html.append("<tr>");
+                        html.append("<td style='padding: 5px'></td>");
+                        html.append("<td style='padding: 5px'></td>");
+                        html.append("<td style='padding: 5px'>"+newSale.getItemCount()+"</td>");
+                        html.append("<td style='padding: 5px'>Total</td>");
+                        html.append("<td style='padding: 5px'>"+nf.format(newSale.getTotal())+"</td>");
+                        html.append("</tr>");
+                        html.append("</tfoot>");
+                html.append("</div>");
+            html.append("</body>");
+        html.append("</html>");
+        return html.toString();
+    }
+
+    /**
+     * Sums item price and qty
+     * @param newSale
+     * TODO: Write tests for this
+     */
+    void sum(Sale newSale) {
+
+        newSale.setTotal(ZERO);
+
+        newSale.setItemCount(0L);
+
+        for(ShoppingCartItem item: newSale.getItems()){
+            newSale.setItemCount(item.getQty() + newSale.getItemCount());
+            newSale.setTotal(newSale.getTotal().add(item.getPrice().multiply(BigDecimal.valueOf(item.getQty()))));
+        }
+    }
+
 }

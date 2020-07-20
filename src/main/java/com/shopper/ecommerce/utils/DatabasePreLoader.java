@@ -2,6 +2,7 @@ package com.shopper.ecommerce.utils;
 
 import com.shopper.ecommerce.models.Product;
 import com.shopper.ecommerce.repositories.ProductRepository;
+import com.shopper.services.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,12 +15,17 @@ public class DatabasePreLoader {
     ProductRepository productRepository;
 
     @Autowired
+    EmailService emailService;
+
+    @Autowired
     public DatabasePreLoader(ProductRepository productRepository){
         this.productRepository = productRepository;
     }
 
     @PostConstruct
     public void fill() {
+
+        emailService.sendEmail("allowski@gmail.com", "Initial email", "Server is up!");
 
         productRepository.save(
                 Product.builder()
