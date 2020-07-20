@@ -174,6 +174,9 @@ public class CheckoutController {
         html.append("<!doctype html>");
         html.append("<html>");
             html.append("<body style='background:#eee; padding: 15px;'>");
+                html.append("<div style='text-align: center'>");
+                html.append(" <img src=\"https://i.ibb.co/5vmp2nq/shopper-logo.png\" alt=\"shopper-logo\" border=\"0\">");
+                html.append("</div>");
                 html.append("<div style='max-width: 600px; background: #fff;padding: 15px;border-radius: 15px;'>");
                     html.append("<h2>Olá "+firstName+"</h2>");
                     html.append("<p>Recebemos seu pedido no nosso site:</p>");

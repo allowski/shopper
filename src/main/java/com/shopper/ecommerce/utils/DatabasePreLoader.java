@@ -34,6 +34,7 @@ public class DatabasePreLoader {
                         .price(BigDecimal.valueOf(6))
                         .description("500ML")
                         .active(true)
+                        .pictureUrl("https://i.ibb.co/r2F3qS7/03da408559.jpg")
                         .build()
         );
 
@@ -44,6 +45,7 @@ public class DatabasePreLoader {
                         .price(BigDecimal.valueOf(5))
                         .description("500ML")
                         .active(true)
+                        .pictureUrl("https://i.ibb.co/DtCVNLQ/Screen-Shot-2020-07-20-at-02-12-34.png")
                         .build()
         );
 
@@ -54,6 +56,7 @@ public class DatabasePreLoader {
                         .price(BigDecimal.valueOf(10))
                         .description("1.5L")
                         .active(true)
+                        .pictureUrl("https://i.ibb.co/FbnFsRW/2cabe4f0-d7da-43b0-b8d4-d8a1ca176eca.png")
                         .build()
         );
 
@@ -64,6 +67,7 @@ public class DatabasePreLoader {
                         .price(BigDecimal.valueOf(10))
                         .description("1.5L")
                         .active(true)
+                        .pictureUrl("https://i.ibb.co/2W9kR7g/7891149440801.jpg")
                         .build()
         );
 
@@ -73,6 +77,7 @@ public class DatabasePreLoader {
                         .name("Pepsi")
                         .price(BigDecimal.valueOf(10))
                         .description("1.5L")
+                        .pictureUrl("https://imgbb.com/][img]https://i.ibb.co/r2F3qS7/03da408559.jpg")
                         .active(true)
                         .build()
         );
@@ -84,6 +89,7 @@ public class DatabasePreLoader {
                         .price(BigDecimal.valueOf(11))
                         .description("1.5L")
                         .active(false)
+                        .pictureUrl("https://imgbb.com/][img]https://i.ibb.co/r2F3qS7/03da408559.jpg")
                         .build()
         );
 

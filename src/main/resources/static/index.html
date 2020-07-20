@@ -7,33 +7,49 @@
         <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons">
         <link rel="stylesheet" href="https://unpkg.com/vue-material/dist/vue-material.min.css">
         <link rel="stylesheet" href="https://unpkg.com/vue-material/dist/theme/default.css">
+        <link rel="stylesheet" href="app.css">
     </head>
     <body>
         <div id="app">
             <header class="container">
-                <nav class="navbar navbar-default">
+                <div class="text-center" style="padding: 20px;">
                     <a href="#">
-                        Shopper
+                       <img src="https://i.ibb.co/5vmp2nq/shopper-logo.png" alt="shopper-logo" border="0">
                     </a>
-                </nav>
+                </div>
             </header>
             <article class="container">
-                <md-steppers :md-active-step.sync="active" md-linear>
+                <md-steppers :md-active-step.sync="active" md-linear :md-dynamic-height="true">
                     <md-step id="first" md-label="Selecionar items" md-description="" :md-done.sync="first" :md-editable="true">
-                        <div style="max-height: 100vh;min-height: 100vh; overflow-y: scroll">
-                        <div class="row">
-                            <div v-for="item in items" class="col-md-3">
-                                <img class="img-rounded" src="//placehold.it/300">
-                                <h4>{{item.name}} {{item.qty}}</h4>
-                                <h5 class="text-success">{{item.price | currency}}</h5>
-                                <div v-if="!item.qty">
-                                    <button class="btn btn-success" @click="addItem(item);">Adicionar</button>
-                                </div>
-                                <div v-if="!!item.qty">
-                                    <button class="btn btn-success" @click="addItem(item);">+</button>
-                                    <button class="btn btn-default">{{item.qty}}</button>
-                                    <button class="btn btn-success" @click="removeItem(item);">-</button>
-                                </div>
+                        <div>
+                        <div class="row text-center">
+                            <div v-for="item in items" class="col-md-3 col-sm-4 col-xs-6" style="margin-bottom: 20px;">
+                                <md-card>
+                                    <md-card-media>
+                                        <img class="img-rounded" :src="item.pictureUrl + ''" @error="item.pictureUrl='//placehold.it/300x300&text=' + (item.name.split(' ').join('+'));console.log(item);">
+                                    </md-card-media>
+                                    <md-card-header>
+                                        <div class="md-title">{{item.name}}</div>
+                                        <div class="md-subtitle">{{item.description}}</div>
+                                    </md-card-header>
+                                    <md-card-content>
+                                        <h5 class="text-success">{{item.price | currency}}</h5>
+                                        <div v-if="!item.qty">
+                                            <button class="btn btn-success" @click="addItem(item);">
+                                                <span class="material-icons">add</span>
+                                                Adicionar</button>
+                                        </div>
+                                        <div v-if="!!item.qty">
+                                            <button class="btn btn-success" @click="addItem(item);">
+                                                <span class="material-icons">add</span>
+                                            </button>
+                                            <button class="btn btn-default">{{item.qty}}</button>
+                                            <button class="btn btn-success" @click="removeItem(item);">
+                                                <span class="material-icons">remove</span>
+                                            </button>
+                                        </div>
+                                    </md-card-content>
+                                </md-card>
                             </div>
                         </div>
                         <div class="clearfix"></div>
@@ -52,8 +68,8 @@
                         <div class="clearfix"></div>
                         </div>
                     </md-step>
-                    <md-step id="second" md-label="Cadastro" md-description="" :md-done.sync="second" :md-editable="true">
-                        <div  style="max-height: 100vh;min-height: 100vh; overflow-y: scroll">
+                    <md-step id="second" md-label="Cadastro" md-description="" :md-done.sync="second" :md-editable="false">
+                        <div>
                         <div class="row">
                             <div class="col-md-12">
                                 <legend>Dados básicos</legend>
@@ -125,8 +141,8 @@
                         <div class="clearfix"></div>
                     </md-step>
                     <md-step id="third" md-label="Pedido realizado">
-                        <h1>Pedido feito!</h1>
-                        <p>Seu pedido foi realizado com sucesso!</p>
+                        <h1>Pedido #{{order.id}} feito!</h1>
+                        <p>Seu pedido foi realizado com sucesso. Verifique seu e-mail.</p>
                     </md-step>
                 </md-steppers>
             </article>
