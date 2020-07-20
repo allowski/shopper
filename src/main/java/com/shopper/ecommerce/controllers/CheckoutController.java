@@ -173,17 +173,18 @@ public class CheckoutController {
         StringBuilder html = new StringBuilder();
         html.append("<!doctype html>");
         html.append("<html>");
-            html.append("<body style='background:#eee; padding: 15px;'>");
-                html.append("<div style='text-align: center'>");
-                html.append(" <img src=\"https://i.ibb.co/5vmp2nq/shopper-logo.png\" alt=\"shopper-logo\" border=\"0\">");
+            html.append("<body style='background:#eee; padding: 15px;white-space:nowrap;border-radius: 15px;'>");
+                html.append("<div style='text-align: center;padding: 20px;'>");
+                html.append(" <img src=\"https://i.ibb.co/5vmp2nq/shopper-logo.png\" alt=\"shopper-logo\" border=\"0\" style='width:150px;'>");
                 html.append("</div>");
                 html.append("<div style='max-width: 600px; background: #fff;padding: 15px;border-radius: 15px;'>");
                     html.append("<h2>Olá "+firstName+"</h2>");
                     html.append("<p>Recebemos seu pedido no nosso site:</p>");
-                    html.append("<table style='width:100%;text-align:left; background: #fff;'>");
+                    html.append("<table style='width:100%;text-align:left; background: #fff;font-size: 9px;'>");
                         html.append("<thead>");
                             html.append("<tr>");
                             html.append("<th>Código</th>");
+                            html.append("<th style='width:32'></th>");
                             html.append("<th style='width:200px'>Descrição</th>");
                             html.append("<th>Qtde</th>");
                             html.append("<th>Preço</th>");
@@ -191,20 +192,23 @@ public class CheckoutController {
                             html.append("</tr>");
                         html.append("</thead>");
                         html.append("<tbody>");
+                        int i = 0;
                         for(ShoppingCartItem item: newSale.getItems()) {
                             html.append("<tr>");
                                 html.append("<td style='padding: 5px'>"+item.getId()+"</td>");
+                                html.append("<td style='width:32px;'><img src='"+item.getPictureUrl()+"' style='width:32px;border-radius: 4px;'></td>");
                                 html.append("<td style='padding: 5px'>");
-                                    html.append("<img src='"+item.getPictureUrl()+"' style='width:40px;border-radius: 4px;'>");
                                     html.append("<b>"+item.getName()+"</b><br>"+item.getDescription()+"</td>");
                                 html.append("<td style='padding: 5px'>"+item.getQty()+"</td>");
                                 html.append("<td style='padding: 5px'>"+nf.format(item.getPrice())+"</td>");
                                 html.append("<td style='padding: 5px'>"+nf.format(item.getPrice().multiply(BigDecimal.valueOf(item.getQty())))+"</td>");
                             html.append("</tr>");
+                            i++;
                         }
                         html.append("</tbody>");
                         html.append("<tfoot>");
                         html.append("<tr>");
+                        html.append("<td style='padding: 5px'></td>");
                         html.append("<td style='padding: 5px'></td>");
                         html.append("<td style='padding: 5px'></td>");
                         html.append("<td style='padding: 5px'>"+newSale.getItemCount()+"</td>");
