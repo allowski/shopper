@@ -23,7 +23,7 @@ import static java.math.BigDecimal.ZERO;
 public class Sale {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     @OneToOne

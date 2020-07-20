@@ -173,11 +173,11 @@ public class CheckoutController {
         StringBuilder html = new StringBuilder();
         html.append("<!doctype html>");
         html.append("<html>");
-            html.append("<body style='background:#eee; padding: 15px;white-space:nowrap;border-radius: 15px;'>");
-                html.append("<div style='text-align: center;padding: 20px;'>");
+            html.append("<body style='background:#eee; padding: 5px;white-space:nowrap;border-radius: 15px;'>");
+                html.append("<div style='text-align: center;padding: 25px;'>");
                 html.append(" <img src=\"https://i.ibb.co/5vmp2nq/shopper-logo.png\" alt=\"shopper-logo\" border=\"0\" style='width:150px;'>");
                 html.append("</div>");
-                html.append("<div style='max-width: 600px; background: #fff;padding: 15px;border-radius: 15px;'>");
+                html.append("<div style='max-width: 700px; background: #fff;padding: 5px;border-radius: 5px;'>");
                     html.append("<h2>Olá "+firstName+"</h2>");
                     html.append("<p>Recebemos seu pedido no nosso site:</p>");
                     html.append("<table style='width:100%;text-align:left; background: #fff;font-size: 9px;'>");
@@ -185,7 +185,7 @@ public class CheckoutController {
                             html.append("<tr>");
                             html.append("<th>Código</th>");
                             html.append("<th style='width:32'></th>");
-                            html.append("<th style='width:200px'>Descrição</th>");
+                            html.append("<th style='width:120px'>Descrição</th>");
                             html.append("<th>Qtde</th>");
                             html.append("<th>Preço</th>");
                             html.append("<th>Sub-total</th>");
