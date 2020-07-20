@@ -67,7 +67,7 @@ public class DatabasePreLoader {
                         .price(BigDecimal.valueOf(10))
                         .description("1.5L")
                         .active(true)
-                        .pictureUrl("https://i.ibb.co/2W9kR7g/7891149440801.jpg")
+                        .pictureUrl("https://i.ibb.co/RT0MR89/1000006979.jpg")
                         .build()
         );
 
@@ -77,7 +77,7 @@ public class DatabasePreLoader {
                         .name("Pepsi")
                         .price(BigDecimal.valueOf(10))
                         .description("1.5L")
-                        .pictureUrl("https://i.ibb.co/r2F3qS7/03da408559.jpg")
+                        .pictureUrl("https://i.ibb.co/RT0MR89/1000006979.jpg")
                         .active(true)
                         .build()
         );
