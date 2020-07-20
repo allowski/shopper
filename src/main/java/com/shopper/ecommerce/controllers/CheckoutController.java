@@ -194,7 +194,9 @@ public class CheckoutController {
                         for(ShoppingCartItem item: newSale.getItems()) {
                             html.append("<tr>");
                                 html.append("<td style='padding: 5px'>"+item.getId()+"</td>");
-                                html.append("<td style='padding: 5px'><b>"+item.getName()+"</b><br>"+item.getDescription()+"</td>");
+                                html.append("<td style='padding: 5px'>");
+                                    html.append("<img src='"+item.getPictureUrl()+"' style='width:40px;border-radius: 4px;'>");
+                                    html.append("<b>"+item.getName()+"</b><br>"+item.getDescription()+"</td>");
                                 html.append("<td style='padding: 5px'>"+item.getQty()+"</td>");
                                 html.append("<td style='padding: 5px'>"+nf.format(item.getPrice())+"</td>");
                                 html.append("<td style='padding: 5px'>"+nf.format(item.getPrice().multiply(BigDecimal.valueOf(item.getQty())))+"</td>");
