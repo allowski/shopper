@@ -7,6 +7,9 @@ import lombok.Data;
 
 import java.util.List;
 
+/**
+ * Checkout payload, as the client will send when checkout button is pressed
+ */
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor

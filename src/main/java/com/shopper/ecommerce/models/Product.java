@@ -23,7 +23,7 @@ import static java.lang.Boolean.TRUE;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     Long id;
 
     String name;
