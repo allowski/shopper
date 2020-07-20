@@ -1,19 +1,25 @@
 package com.shopper.ecommerce.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
+@AllArgsConstructor
+@Builder
 public class Checkout {
 
     Customer customer;
 
     Address address;
 
-    List<HashMap<Product, Long>> items;
+    List<ShoppingCartItem> items;
 
+    public Checkout() {
+
+    }
 }

@@ -1,24 +1,27 @@
 package com.shopper.ecommerce.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.shopper.ecommerce.utils.AddressConverter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.ArrayList;
+import javax.persistence.*;
 import java.util.Date;
 
 @Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     Long id;
 
     String fullName;
@@ -29,7 +32,9 @@ public class Customer {
 
     String email;
 
-    ArrayList<Address> addresses = new ArrayList<>();
+    @Convert(converter = AddressConverter.class)
+    @Column(columnDefinition = "varchar(2048)")
+    Address address;
 
     @CreationTimestamp
     Date createAt;
