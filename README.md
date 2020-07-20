@@ -23,6 +23,8 @@ Before start writing code, you must read this guidelines:
 ### Implementation
 
 This project uses the following dependencies:
+- Gradle 6.2
 - Java 8+
 - SpringBoot + JPA + Data + Hibernate
 - H2 In-memmory db
+- Misc: lombok
